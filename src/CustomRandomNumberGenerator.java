@@ -33,7 +33,53 @@ public class CustomRandomNumberGenerator {
         return bytes;
     }
 
-    public byte[] reverse(byte[] encryptedBytes) throws Exception {
+    public byte[] reverseBytes(byte[] encryptedBytes) throws Exception {
         return decryptCipher.update(encryptedBytes);
+    }
+
+    public int nextInt() {
+        byte[] randomBytes = new byte[16];
+        secureRandom.nextBytes(randomBytes);
+        byte[] encryptedBytes = encryptCipher.update(randomBytes);
+        int result = 0;
+
+        for (int i = 0; i < 16; i++) {
+            result = (result << 8) + (encryptedBytes[i] & 0xff);
+        }
+
+        return result;
+    }
+
+    public int[] nextInts(int numInts) {
+        int[] ints = new int[numInts];
+
+        for (int i = 0; i < numInts; i++) {
+            ints[i] = nextInt();
+        }
+
+        return ints;
+    }
+
+    public long nextLong() {
+        byte[] randomBytes = new byte[16];
+        secureRandom.nextBytes(randomBytes);
+        byte[] encryptedBytes = encryptCipher.update(randomBytes);
+        long result = 0;
+
+        for (int i = 0; i < 16; i++) {
+            result = (result << 8) + (encryptedBytes[i] & 0xff);
+        }
+
+        return result;
+    }
+
+    public long[] nextLongs(int numLongs) {
+        long[] longs = new long[numLongs];
+
+        for (int i = 0; i < numLongs; i++) {
+            longs[i] = nextLong();
+        }
+
+        return longs;
     }
 }
