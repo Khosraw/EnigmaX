@@ -1,8 +1,9 @@
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         // ask if the user wants to encrypt or decrypt a message
         Scanner sc = new Scanner(System.in);
 
@@ -15,8 +16,10 @@ public class Main {
             System.out.println("Enter a key:");
             int key = sc.nextInt();
 
+            String encryptedMessage = encrypt(message, key);
+
             System.out.println("Your encrypted message is:");
-            System.out.println(encrypt(message, key));
+            System.out.println(encryptedMessage);
         } else if (answer.equals("decrypt")) {
             System.out.println("Enter a message to decrypt:");
             String message = sc.nextLine();
@@ -129,11 +132,11 @@ public class Main {
         return finalMessage;
     }
 
-    public static StringBuilder moduloReduction(StringBuilder finalMessage, int prime) {
+    public static StringBuilder moduloReduction(StringBuilder finalMessage, BigInteger prime) {
         StringBuilder reducedMessage = new StringBuilder();
 
         for (int i = 0; i < finalMessage.length(); i++) {
-            int ascii = finalMessage.charAt(i) % prime;
+            int ascii = finalMessage.charAt(i) % prime.intValue();
             char character = (char) ascii;
             reducedMessage.append(character);
         }
@@ -176,7 +179,7 @@ public class Main {
         return oneTimePadMessage;
     }
 
-    public static String encrypt(String message, int key) {
+    public static String encrypt(String message, int key) throws Exception {
         // map each character to unique binary code
         ArrayList<String> binary = binaryMapper(message);
 
@@ -202,7 +205,9 @@ public class Main {
         StringBuilder finalMessage = keyXOREncryption(transposedMessage, key);
 
         // encrypted sequence is then reduced modulo a random prime number to produce a new sequence
-        int prime = 13;
+        BigInteger prime = PrimeGenerator.generatePrimeWithKey(key);
+        System.out.println("Your new decryption key is: " + prime + " (prime number)");
+
         StringBuilder reducedMessage = moduloReduction(finalMessage, prime);
 
         // new sequence is then converted to a different number base, such as base 64, using a custom conversion scheme
