@@ -4,10 +4,10 @@ public class PrimeGenerator {
 
     public static BigInteger generatePrimeWithKey(long key) throws Exception {
         CustomRandomNumberGenerator customRandomNumberGenerator = new CustomRandomNumberGenerator(new byte[]{(byte) key});
-        byte randomRadix = (byte) (Math.abs(customRandomNumberGenerator.nextByte()) % 35);
-        BigInteger primeCandidate = new BigInteger(String.valueOf(1010), randomRadix);
+        int randomRadix = Math.abs(customRandomNumberGenerator.nextInt()) % 35;
+        BigInteger primeCandidate = new BigInteger(Long.toBinaryString(key), randomRadix);
         while (!primeCandidate.isProbablePrime(100)) {
-            primeCandidate = new BigInteger(String.valueOf(1010), randomRadix);
+            primeCandidate = new BigInteger(Long.toBinaryString(key), randomRadix);
 
             primeCandidate = primeCandidate.nextProbablePrime();
         }
