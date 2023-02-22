@@ -37,7 +37,7 @@ Hello World
 ```
 
 ## Algorithm Explanation
-The EnigmaX program applies a series of encryption algorithms to the user's input. The following is a brief explanation of each of these algorithms.
+The EnigmaX program applies a series of encryption algorithms to the user's input. The following is a brief explanation of some of these algorithms.
 
 ## Caesar Cipher
 The Caesar cipher is a simple substitution cipher that replaces each letter in the message with a letter that is a fixed number of positions down the alphabet. In EnigmaX, the Caesar cipher is implemented by shifting each character in the message a certain number of positions, which is determined by the key provided by the user.
